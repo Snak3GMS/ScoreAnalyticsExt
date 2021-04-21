@@ -3,9 +3,11 @@
 
 Скриншот:
 - Авторизован:
-  ![image](https://user-images.githubusercontent.com/36984325/115585811-a16d6680-a2d4-11eb-9ea4-d3a0f9118903.png)
+
+  ![image](https://user-images.githubusercontent.com/36984325/115628153-ddbaba00-a308-11eb-8b9a-771100ec8ee8.png)
 
 - Не авторизован:
+
   ![image](https://user-images.githubusercontent.com/36984325/115585587-6cf9aa80-a2d4-11eb-8679-a0cdce3306cd.png)
 
 # Установка
@@ -23,8 +25,6 @@
 # Как обновлять
 1. Скачиваете новую версию по ссылкам выше
 2. Распаковываете содержимое папки "Score Analytics for Developers" в ту же папку, где лежит старая версия
-3. Нажимаете кнопку обновить рядом с расширением 
-
-![image](https://user-images.githubusercontent.com/36984325/115627783-448ba380-a308-11eb-9228-708ffcdaca42.png)
+3. Нажимаете кнопку обновить рядом с расширением ![image](https://user-images.githubusercontent.com/36984325/115627783-448ba380-a308-11eb-9228-708ffcdaca42.png)
 
 Либо удаляйте и устанавливайте по-инструкции выше.
