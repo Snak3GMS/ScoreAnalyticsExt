@@ -10,13 +10,19 @@
 
 # Установка
 Скачай расширение:
- - если хром https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.0.zip
- - если хромиум(но не хром) https://github.com/Snak3GMS/ScoreAnalyticsExt/releases/download/1.0/ScoreAnalytics.crx
+ - если хром [upd 1.1](https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.1.zip)
+ - если хромиум(но не хром) [upd 1.1](https://github.com/Snak3GMS/ScoreAnalyticsExt/releases/download/1.1/ScoreAnalytics.crx)
 
 Если google chrome: 
-  1. Откройте вкладку расширений в хроме(chrome://extensions/)
+  1. Откройте вкладку расширений в [хроме](chrome://extensions/)
   2. В правом верхнем углу включите режим разработчика
   3. В левом верхнем углу нажмите "Загрузить распакованное расширение"
-  4. Выделяете папку Score Analytics и нажимаете выбор папки
-![image](https://user-images.githubusercontent.com/36984325/115588872-e0e98200-a2d7-11eb-99e9-31326864a652.png)
+  4. Выделяете папку Score Analytics for Developers и нажимаете выбор папки
+![image](https://user-images.githubusercontent.com/36984325/115627336-8405c000-a307-11eb-8531-f3ebc7b72b73.png)
 ## Загрузка расширения состоялась
+# Как обновлять
+1. Скачиваете новую версию по ссылкам выше
+2. Распаковываете содержимое папки "Score Analytics for Developers" в ту же папку, где лежит старая версия
+3. Нажимаете кнопку обновить рядом с расширением ![image](https://user-images.githubusercontent.com/36984325/115627783-448ba380-a308-11eb-9228-708ffcdaca42.png)
+
+Либо удаляйте и устанавливайте по-инструкции выше.
