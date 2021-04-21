@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="script-src-elem 'self' blob: filesystem:" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
@@ -12,7 +13,7 @@
         .container {
             display: flex;
             flex-direction: column;
-            width: 500px;
+            width: 775px;
             padding: 10px;
         }
         .inputs {
@@ -22,7 +23,7 @@
         label {
             display: flex;
             justify-content: space-between;
-            width: 80%;
+            width: 100%;
             margin: 2px auto;
         }
         .output {
@@ -32,38 +33,58 @@
             width: 280px;
         }
         .done, .task-analitycs, .my-analytics {
-            width: 85px;
+            width: 125px;
             height: 35px;
             margin: 15px 5px;
+            border: none;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            box-shadow: 1px 1px #a5a5a5;
+            transition: all .4s ease-in-out;
+            outline: none;
+        }
+        .done:active, .task-analitycs:active, .my-analytics:active {
+            box-shadow: none;
+            margin-top: 16px;
+            margin-right: 4px;
+            margin-left: 6px;
         }
         .output-fill {
-            border: 1px solid black;
             border-radius: 10px;
-            padding: 10px 5px;
-            background-color: #f1f1f1;
+            padding: 10px 0;
         }
         .btns {
             display: flex;
             justify-content: flex-end;
+        }
+        .output-container {
+            display: flex;
+            border-top: 1px solid #f1f1f1;
+        }
+        .chart-container {
+            width: 510px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="inputs">
-            <label>Type taskId<select class="id">
-                <option disabled>Choose task</option>
+            <label>Choose taskId<select class="id">
+                <option disabled>Choose task:</option>
             </select></label>
-            <label>Type githubName<input type="text" class="name"></label>
+            <label>Write your github name:<input type="text" class="name"></label>
         </div>
         <div class="btns">
             <button class="my-analytics">My analytics</button>
             <button class="task-analitycs">Task analytics</button>
             <button class="done">All analytics</button>
         </div>
-        
-        <div class="output"></div>
-    </div> 
+        <div class="output-container">
+            <div class="output"></div>
+            <div class="chart-container"></div>
+        </div>
+    </div>
+    <script src="chart.js"></script> 
     <script src="script.js"></script>
 </body>
 </html>
