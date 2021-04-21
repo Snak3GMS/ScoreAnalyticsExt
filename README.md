@@ -14,7 +14,7 @@
  - если не хром https://github.com/Snak3GMS/ScoreAnalyticsExt/releases/download/1.0/ScoreAnalytics.crx
 
 Если google chrome: 
-  1. Откройте вкладку [расширений в хроме](chrome://extensions/)
+  1. Откройте вкладку расширений в хроме(chrome://extensions/)
   2. В правом верхнем углу включите режим разработчика
   3. В левом верхнем углу нажмите "Загрузить распакованное расширение"
   4. Выделяете папку Score Analytics и нажимаете выбор папки
