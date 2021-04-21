@@ -11,10 +11,11 @@
 Скачай расширение:
  - если хром https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.0.zip
  - если не хром https://github.com/Snak3GMS/ScoreAnalyticsExt/releases/download/1.0/ScoreAnalytics.crx
+
 Если google chrome: 
   1. Откройте вкладку [расширений в хроме](chrome://extensions/)
   2. В правом верхнем углу включите режим разработчика
   3. В левом верхнем углу нажмите "Загрузить распакованное расширение"
   4. Выделяете папку Score Analytics и нажимаете выбор папки
 ![image](https://user-images.githubusercontent.com/36984325/115588323-4a1cc580-a2d7-11eb-82fd-85c1cfcd8a8e.png)
-##Загрузка расширения состоялась
+## Загрузка расширения состоялась
