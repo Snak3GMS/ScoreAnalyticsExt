@@ -1,37 +1,22 @@
-## Welcome to GitHub Pages
+# Score Analytics
+Привет это простое расширение нужно чтобы быстро посмотреть статистику по определенному таску в Roling Scopes School, а также можно посмотреть статистику по нику в github
 
-You can use the [editor on GitHub](https://github.com/Snak3GMS/ScoreAnalyticsExt/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Скриншот:
+- Авторизован:
+  ![image](https://user-images.githubusercontent.com/36984325/115585811-a16d6680-a2d4-11eb-9ea4-d3a0f9118903.png)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+- Не авторизован:
+  ![image](https://user-images.githubusercontent.com/36984325/115585587-6cf9aa80-a2d4-11eb-8679-a0cdce3306cd.png)
 
-### Markdown
+# Установка
+Скачай расширение:
+ - если хром https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.0.zip
+ - если хромиум(но не хром) https://github.com/Snak3GMS/ScoreAnalyticsExt/releases/download/1.0/ScoreAnalytics.crx
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Snak3GMS/ScoreAnalyticsExt/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Если google chrome: 
+  1. Откройте вкладку расширений в хроме(chrome://extensions/)
+  2. В правом верхнем углу включите режим разработчика
+  3. В левом верхнем углу нажмите "Загрузить распакованное расширение"
+  4. Выделяете папку Score Analytics и нажимаете выбор папки
+![image](https://user-images.githubusercontent.com/36984325/115588872-e0e98200-a2d7-11eb-99e9-31326864a652.png)
+## Загрузка расширения состоялась
