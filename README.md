@@ -3,7 +3,7 @@
 
 Скриншот:
 - Авторизован:
-  ![image](https://user-images.githubusercontent.com/36984325/115585811-a16d6680-a2d4-11eb-9ea4-d3a0f9118903.png)
+  ![image](https://user-images.githubusercontent.com/36984325/115628153-ddbaba00-a308-11eb-8b9a-771100ec8ee8.png)
 
 - Не авторизован:
   ![image](https://user-images.githubusercontent.com/36984325/115585587-6cf9aa80-a2d4-11eb-8679-a0cdce3306cd.png)
