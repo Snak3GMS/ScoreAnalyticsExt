@@ -10,8 +10,8 @@
 
 # Установка
 Скачай расширение:
- - если хром https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.0.zip
- - если хромиум(но не хром) https://github.com/Snak3GMS/ScoreAnalyticsExt/releases/download/1.0/ScoreAnalytics.crx
+ - если хром [link](https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.0.zip)
+ - если хромиум(но не хром) [link](https://github.com/Snak3GMS/ScoreAnalyticsExt/releases/download/1.0/ScoreAnalytics.crx)
 
 Если google chrome: 
   1. Откройте вкладку расширений в хроме(chrome://extensions/)
