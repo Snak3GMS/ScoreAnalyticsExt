@@ -7,8 +7,6 @@
 - Не авторизован:
   ![image](https://user-images.githubusercontent.com/36984325/115585587-6cf9aa80-a2d4-11eb-8679-a0cdce3306cd.png)
 
-=========
-
 # Установка
 Скачай расширение:
  - если хром https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.0.zip
