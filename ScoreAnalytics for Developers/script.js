@@ -4,6 +4,7 @@ class ScoreAnalytics {
         this.name = name;
         this.output = document.querySelector('.output');
         this.chartContainer = document.querySelector('.chart-container');
+        this.nameField = document.querySelector('.name');
     }
     async getList() {
         const scoreList = await fetch('https://app.rs.school/api/course/36/students/score?current=1&pageSize=4000&orderBy=rank&orderDirection=asc&activeOnly=true'),
@@ -97,7 +98,7 @@ class ScoreAnalytics {
     async getTaskList() {
         const taskRequest = await fetch('https://app.rs.school/api/course/36/tasks'),
               task = await taskRequest.json();
-        let taskList = {};
+        let   taskList = {};
         if (task.message === "Unauthorized") {
             this.output.classList.add('output-fill');
             this.output.innerHTML = 'Зайди в app.rs.school';
@@ -112,6 +113,9 @@ class ScoreAnalytics {
             option.innerHTML = `${key} ${taskName}`;
             document.querySelector('.id').append(option);
         }
+        chrome.cookies.get({ url: 'https://github.com', name: 'dotcom_user' }, (cookie) => {
+            this.nameField.value = cookie.value;
+        });
     }
 }
 
@@ -152,6 +156,5 @@ document.querySelector('.task-analitycs').addEventListener('click', ()=>{
     chartContainer.innerHTML = '<canvas id="taskChart"></canvas>';
     new ScoreAnalytics(id, ghName).getList().catch(()=>{output.innerHTML = 'Зайди в app.rs.school'});
 });
-
 
 

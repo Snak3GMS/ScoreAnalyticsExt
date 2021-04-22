@@ -8,6 +8,10 @@
 		"default_icon": "icon.png",
 		"default_popup": "index.html"
 	},
-	"permissions": ["activeTab", "https://cdn.jsdelivr.net/npm/chart.js"],
+	"permissions": [
+		"activeTab",
+		"cookies",
+		"*://github.com/"
+	],
 	"content_security_policy": "script-src 'self' https://cdn.jsdelivr.net; object-src 'self'"
 }
