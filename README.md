@@ -7,7 +7,7 @@
 ![image](https://user-images.githubusercontent.com/36984325/115792420-f2fc1b00-a3d2-11eb-8e97-ba7679038b57.png)
 ![image](https://user-images.githubusercontent.com/36984325/115765345-4d838000-a3af-11eb-834b-7f9279816e7f.png)
 ![image](https://user-images.githubusercontent.com/36984325/115792467-05765480-a3d3-11eb-8e2a-684150ccd257.png)
-![image](https://user-images.githubusercontent.com/36984325/115792502-14f59d80-a3d3-11eb-899e-86992c749cef.png)
+![image](https://user-images.githubusercontent.com/36984325/115793478-d95bd300-a3d4-11eb-918b-0e6968b94a12.png)
 
 
 - Не авторизован:
@@ -16,7 +16,7 @@
 
 # Установка
 Скачай расширение:
- - если хром [upd 1.3(23.04.21)](https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.3.zip)
+ - если хром [upd 1.3(23.04.21)](https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.3.1.zip)
  - если хромиум(но не хром) upd 23.04.21 скачиваете по ссылке выше, расширение лежит в папке без фразы "for Developers"
 
 Если google chrome: 
