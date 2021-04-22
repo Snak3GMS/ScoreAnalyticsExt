@@ -111,7 +111,7 @@ class ScoreAnalytics {
             data,
             options: {
                 responsive: true,
-                maintainAspectRatio: true
+                maintainAspectRatio: false
             }
         };
         let myChart = new Chart(
