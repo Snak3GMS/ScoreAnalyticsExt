@@ -5,8 +5,13 @@ class ScoreAnalytics {
         this.output = document.querySelector('.output');
         this.chartContainer = document.querySelector('.chart-container');
         this.nameField = document.querySelector('.name');
+        this.crossCheckId = document.querySelector('.cross-check');
     }
     async getList() {
+        if (this.taskId == '0') {
+            this.output.innerHTML = 'Choose task';
+            return false;
+        }
         const scoreList = await fetch('https://app.rs.school/api/course/36/students/score?current=1&pageSize=4000&orderBy=rank&orderDirection=asc&activeOnly=true'),
             taskRequest = await fetch('https://app.rs.school/api/course/36/tasks'),
             parsedScoreList = await scoreList.json(),
@@ -64,7 +69,7 @@ class ScoreAnalytics {
                 let taskName = taskList[elem.courseTaskId];
                 labels.push(taskName);
                 passed.push(elem.score);
-                results.push(`${elem.courseTaskId}\t${taskName}: <span class="score">${elem.score}</span>\n`);
+                results.push(`${elem.courseTaskId}\t${taskName}: ${elem.score}\n`);
             });
         });
         this.renderCharts(labels, passed, 'myChart');
@@ -98,7 +103,8 @@ class ScoreAnalytics {
     async getTaskList() {
         const taskRequest = await fetch('https://app.rs.school/api/course/36/tasks'),
               task = await taskRequest.json();
-        let   taskList = {};
+        let   taskList = {},
+              crossCheckList = {};
         if (task.message === "Unauthorized") {
             this.output.classList.add('output-fill');
             this.output.innerHTML = 'Зайди в app.rs.school';
@@ -106,6 +112,9 @@ class ScoreAnalytics {
         }
         task.data.forEach(elem=>{
             taskList[elem.id] = elem.name;
+            if (elem.checker === 'crossCheck') {
+                crossCheckList[elem.id] = [elem.name,elem.maxScore];
+            }
         });
         for (let [key,taskName] of Object.entries(taskList)) {
             let option = document.createElement('option');
@@ -113,9 +122,36 @@ class ScoreAnalytics {
             option.innerHTML = `${key} ${taskName}`;
             document.querySelector('.id').append(option);
         }
+        for (let [key,[taskName, maxScore]] of Object.entries(crossCheckList)) {
+            let option = document.createElement('option');
+            option.value = key;
+            option.dataset.maxScore = maxScore;
+            option.innerHTML = `${key} ${taskName}`;
+            document.querySelector('.cross-check').append(option);
+        }
         chrome.cookies.get({ url: 'https://github.com', name: 'dotcom_user' }, (cookie) => {
             this.nameField.value = cookie.value;
         });
+    }
+    async getFeedback() {
+        if (this.name == '') {
+            this.output.innerHTML = 'Ты кто? Напиши свой github ник выше!';
+            return false;
+        }
+        let feedbackRequest = await fetch(`https://app.rs.school/api/course/36/student/${this.name}/task/${this.crossCheckId.value}/cross-check/feedback`),
+            feedbackResponse = await feedbackRequest.json();
+        this.output.innerHTML = '';
+        feedbackResponse.data.comments.forEach((elem, index)=>{
+            const author = elem.author ? `<a href="https://github.com/${elem.author.githubId}" target="_blank">${elem.author.githubId}</a>` : `Student ${index+1}`;
+            let feedback = `
+            <div class="feedback">
+                <div class="ghName">GitHub name: ${author}</div>
+                <div class="fb-score">Score: ${elem.score}/${this.crossCheckId.selectedOptions[0].dataset.maxScore}</div>
+                <div class="comment">Comment:\n${elem.comment}</div></div>
+            `;
+            this.output.innerHTML += feedback;
+        });
+        this.crossCheckId.selectedIndex = 0;
     }
 }
 
@@ -155,6 +191,17 @@ document.querySelector('.task-analitycs').addEventListener('click', ()=>{
     output.classList.add('output-fill');
     chartContainer.innerHTML = '<canvas id="taskChart"></canvas>';
     new ScoreAnalytics(id, ghName).getList().catch(()=>{output.innerHTML = 'Зайди в app.rs.school'});
+});
+document.querySelector('.cross-check').addEventListener('change', ()=>{
+    const id = document.querySelector('.id').value,
+          ghName = document.querySelector('.name').value,
+          output =document.querySelector('.output'),
+          chartContainer = document.querySelector('.chart-container');
+
+    output.innerHTML = 'LOADING...';
+    output.classList.add('output-fill');
+    chartContainer.innerHTML = '';
+    new ScoreAnalytics(id, ghName).getFeedback().catch(()=>{output.innerHTML = 'Зайди в app.rs.school или укажи СВОЙ гитхаб, хитрый'});
 });
 
 
