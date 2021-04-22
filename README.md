@@ -1,17 +1,21 @@
 # Score Analytics
-Привет это простое расширение нужно чтобы быстро посмотреть статистику по определенному таску в Roling Scopes School, а также можно посмотреть статистику по нику в github
+Привет это простое расширение нужно чтобы быстро посмотреть статистику по определенному таску в Roling Scopes School, обратную связь по кросс чеку, а также можно посмотреть статистику по нику в github.
 
 Скриншот:
 - Авторизован:
-  ![image](https://user-images.githubusercontent.com/36984325/115628153-ddbaba00-a308-11eb-8b9a-771100ec8ee8.png)
+
+![image](https://user-images.githubusercontent.com/36984325/115628153-ddbaba00-a308-11eb-8b9a-771100ec8ee8.png)
+![image](https://user-images.githubusercontent.com/36984325/115765345-4d838000-a3af-11eb-834b-7f9279816e7f.png)
+
 
 - Не авторизован:
+
   ![image](https://user-images.githubusercontent.com/36984325/115585587-6cf9aa80-a2d4-11eb-8679-a0cdce3306cd.png)
 
 # Установка
 Скачай расширение:
- - если хром [upd 1.1.1](https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.1.1.zip)
- - если хромиум(но не хром) [upd 1.1.1](https://github.com/Snak3GMS/ScoreAnalyticsExt/releases/download/1.1.1/ScoreAnalytics.crx)
+ - если хром [upd 1.2(22.04.21)](https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.2.zip)
+ - если хромиум(но не хром) [upd 1.2(22.04.21)](https://github.com/Snak3GMS/ScoreAnalyticsExt/releases/download/1.2/ScoreAnalytics.crx)
 
 Если google chrome: 
   1. Откройте вкладку расширений в [хроме](chrome://extensions/)
