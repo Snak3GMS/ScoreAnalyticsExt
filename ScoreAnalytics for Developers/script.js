@@ -8,10 +8,10 @@ class ScoreAnalytics {
         this.crossCheckId = document.querySelector('.cross-check');
         this.deadlineTask = {};
     }
-    async getList() {
+    async getList(more) {
         if (this.taskId == '0') {
             this.output.innerHTML = 'Choose task';
-            return false;
+            throw 'Не выбран таск' ;
         }
         const scoreList = await fetch('https://app.rs.school/api/course/36/students/score?current=1&pageSize=4000&orderBy=rank&orderDirection=asc&activeOnly=true'),
             taskRequest = await fetch('https://app.rs.school/api/course/36/tasks'),
@@ -46,9 +46,9 @@ class ScoreAnalytics {
             }
         });
         this.output.innerHTML = `Task name: ${taskName} \n\nResults:\n${resultsList.join('\n')} \n\nPassed amount: ${results.reduce((a,b)=>a+b,0)}\n\n`;
-        this.renderCharts(labels, passed, 'taskChart');
+        this.renderCharts(labels, passed, 'taskChart', false, more);
     }
-    async myAnalytics(percentage) {
+    async myAnalytics(percentage, more) {
         if (this.name == '') {
             this.output.innerHTML = 'Ты кто? Напиши свой github ник выше!';
             return false;
@@ -76,7 +76,7 @@ class ScoreAnalytics {
                     });
                 }); 
                 console.log(passed);
-                this.renderCharts(labels, passed, 'myChart', percentage);
+                this.renderCharts(labels, passed, 'myChart', percentage, more);
                 this.output.innerHTML += results.join('');
             });
             return 'ok';
@@ -91,10 +91,10 @@ class ScoreAnalytics {
             });
         });
         console.log(passed)
-        this.renderCharts(labels, passed, 'myChart', percentage);
+        this.renderCharts(labels, passed, 'myChart', percentage, more);
         this.output.innerHTML += results.join('');
         }
-    renderCharts(labels, passed, canvasId, percentage) {
+    renderCharts(labels, passed, canvasId, percentage, more) {
             
         const data = {
             labels: labels,
@@ -111,7 +111,7 @@ class ScoreAnalytics {
             data,
             options: {
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: more ? true : false
             }
         };
         let myChart = new Chart(
@@ -180,7 +180,7 @@ class ScoreAnalytics {
             <div class="feedback">
                 <div class="ghName">GitHub name: ${author}</div>
                 <div class="fb-score">Score: ${elem.score}/${this.crossCheckId.selectedOptions[0].dataset.maxScore}</div>
-                <div class="comment">Comment:\n${elem.comment}</div></div>
+                <div class="comment">Comment:\n${this.escapeHtml(elem.comment)}</div></div>
             `;
             this.output.innerHTML += feedback;
         });
@@ -193,7 +193,7 @@ class ScoreAnalytics {
                 let task = `
                     <div class="task">
                         <div class="task-type">Type: <span class="type">${type}</span></div>
-                        <div class="task-name">Name: <a href="${url}">${taskName}</a></div>
+                        <div class="task-name">Name: <a href="${url}" target="_blank">${taskName}</a></div>
                         <div class="score-wrapper"><div class="score">Score: ${max}</div><div class="score-weight">Weight: ${scoreWeight}</div></div>
                         <div class="comment">Date: ${date}</div>
                     </div>
@@ -202,6 +202,14 @@ class ScoreAnalytics {
             }
         }).catch(reject => this.output.innerHTML = 'Дедлайнов нет');
     }
+    escapeHtml(unsafe) {
+        return unsafe
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+     }
 }
 
 new ScoreAnalytics().getTaskList();
@@ -215,9 +223,9 @@ document.querySelector('.done').addEventListener('click', ()=>{
     output.classList.add('output-fill');
     chartContainer.innerHTML = '<canvas id="taskChart"></canvas>';
     chartContainer.innerHTML += '<canvas id="myChart"></canvas>';
-    new ScoreAnalytics(id, ghName).getList().then(()=> {
-        new ScoreAnalytics(id, ghName).myAnalytics();
-    }).catch(()=>{output.innerHTML = 'Зайди в app.rs.school'});
+    new ScoreAnalytics(id, ghName).getList(true).then(()=> {
+        new ScoreAnalytics(id, ghName).myAnalytics(false,true);
+    }).catch((reject)=>{reject ? output.innerHTML = `${reject}` : output.innerHTML = 'Зайди в app.rs.school'});
 });
 document.querySelector('.my-analytics').addEventListener('click', ()=>{
     const id = document.querySelector('.id').value,
@@ -239,7 +247,9 @@ document.querySelector('.task-analitycs').addEventListener('click', ()=>{
     output.innerHTML = 'LOADING...';
     output.classList.add('output-fill');
     chartContainer.innerHTML = '<canvas id="taskChart"></canvas>';
-    new ScoreAnalytics(id, ghName).getList().catch(()=>{output.innerHTML = 'Зайди в app.rs.school'});
+    new ScoreAnalytics(id, ghName).getList().catch((reject)=>{reject ? 
+        output.innerHTML = reject : 
+        output.innerHTML = 'Зайди в app.rs.school'});
 });
 document.querySelector('.cross-check').addEventListener('change', ()=>{
     const id = document.querySelector('.id').value,
