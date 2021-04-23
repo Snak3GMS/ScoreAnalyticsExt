@@ -7,6 +7,7 @@ class ScoreAnalytics {
         this.nameField = document.querySelector('.name');
         this.crossCheckId = document.querySelector('.cross-check');
         this.deadlineTask = {};
+        this.timer = new Map();
     }
     async getList(more) {
         if (this.taskId == '0') {
@@ -75,7 +76,6 @@ class ScoreAnalytics {
                         results.push(`${elem.courseTaskId}\t${taskName}: ${elem.score}/${result[elem.courseTaskId]}\n`);
                     });
                 }); 
-                console.log(passed);
                 this.renderCharts(labels, passed, 'myChart', percentage, more);
                 this.output.innerHTML += results.join('');
             });
@@ -90,7 +90,6 @@ class ScoreAnalytics {
                 results.push(`${elem.courseTaskId}\t${taskName}: ${elem.score}\n`);
             });
         });
-        console.log(passed)
         this.renderCharts(labels, passed, 'myChart', percentage, more);
         this.output.innerHTML += results.join('');
         }
@@ -137,7 +136,7 @@ class ScoreAnalytics {
             }
             if (deadline && new Date(elem.studentEndDate) > new Date() && new Date(elem.studentStartDate) < new Date()) {
                 deadlineList[elem.name] = [`${new Date(elem.studentEndDate).toLocaleString()}\n${new Date(elem.studentEndDate).toString().match(/(GMT+[+]+[0-9 (a-zA-Zа-яА-Я,)]+)/)[0]}`,
-                elem.descriptionUrl, elem.maxScore, `deadline submit`, elem.scoreWeight];
+                elem.descriptionUrl, elem.maxScore, `deadline submit`, elem.scoreWeight, new Date(elem.studentEndDate), elem.id];
             }
             if (percentage) {
                 taskList[elem.id] = elem.maxScore;
@@ -187,19 +186,22 @@ class ScoreAnalytics {
         this.crossCheckId.selectedIndex = 0;
     }
     getDeadlineList() {
-        this.getTaskList(true).then(result => {
+        return this.getTaskList(true).then(result => {
             this.output.innerHTML = '';
-            for (let [taskName,[date, url, max, type,scoreWeight]] of Object.entries(result)) {
+            for (let [taskName,[date, url, max, type,scoreWeight,deadlineDate,id]] of Object.entries(result)) {
+                
                 let task = `
                     <div class="task">
                         <div class="task-type">Type: <span class="type">${type}</span></div>
                         <div class="task-name">Name: <a href="${url}" target="_blank">${taskName}</a></div>
                         <div class="score-wrapper"><div class="score">Score: ${max}</div><div class="score-weight">Weight: ${scoreWeight}</div></div>
-                        <div class="comment">Date: ${date}</div>
+                        <div class="date">Date: ${date}\nTimer: <span class='id${id}'></span></div>
                     </div>
-                    `
+                    `;
                 this.output.innerHTML +=task;
+                this.timer[id] = deadlineDate;
             }
+            return this;
         }).catch(reject => this.output.innerHTML = 'Дедлайнов нет');
     }
     escapeHtml(unsafe) {
@@ -209,68 +211,99 @@ class ScoreAnalytics {
              .replace(/>/g, "&gt;")
              .replace(/"/g, "&quot;")
              .replace(/'/g, "&#039;");
-     }
+    }
+    deadlineTimer(date) {
+        let a = date;
+        let b = new Date();
+        let c = (a-b)/1000,
+            sec = Math.trunc(c%60),
+            min = Math.trunc(c/60%60),
+            hours = Math.trunc(c/60/60);
+        return `${hours > 9 ? hours : '0'+hours}:${min > 9 ? min : '0'+min}:${sec > 9 ? sec : '0'+sec}`;
+
+    }
 }
+async function start() {
+    let request = await fetch('https://app.rs.school/api/session', {
+        mode: 'no-cors'
+    });
+    if (request.ok) {
+        new ScoreAnalytics().getTaskList();
+        document.querySelector('.done').addEventListener('click', ()=>{
+            const id = document.querySelector('.id').value,
+                ghName = document.querySelector('.name').value,
+                output =document.querySelector('.output'),
+                chartContainer = document.querySelector('.chart-container');
 
-new ScoreAnalytics().getTaskList();
-document.querySelector('.done').addEventListener('click', ()=>{
-    const id = document.querySelector('.id').value,
-          ghName = document.querySelector('.name').value,
-          output =document.querySelector('.output'),
-          chartContainer = document.querySelector('.chart-container');
+            output.innerHTML = 'LOADING...';
+            output.classList.add('output-fill');
+            chartContainer.innerHTML = '<canvas id="taskChart"></canvas>';
+            chartContainer.innerHTML += '<canvas id="myChart"></canvas>';
+            new ScoreAnalytics(id, ghName).getList(true).then(()=> {
+                new ScoreAnalytics(id, ghName).myAnalytics(false,true);
+            }).catch((reject)=>{reject ? output.innerHTML = `${reject}` : output.innerHTML = 'Зайди в app.rs.school'});
+        });
+        document.querySelector('.my-analytics').addEventListener('click', ()=>{
+            const id = document.querySelector('.id').value,
+                ghName = document.querySelector('.name').value,
+                output =document.querySelector('.output'),
+                chartContainer = document.querySelector('.chart-container');
 
-    output.innerHTML = 'LOADING...';
-    output.classList.add('output-fill');
-    chartContainer.innerHTML = '<canvas id="taskChart"></canvas>';
-    chartContainer.innerHTML += '<canvas id="myChart"></canvas>';
-    new ScoreAnalytics(id, ghName).getList(true).then(()=> {
-        new ScoreAnalytics(id, ghName).myAnalytics(false,true);
-    }).catch((reject)=>{reject ? output.innerHTML = `${reject}` : output.innerHTML = 'Зайди в app.rs.school'});
-});
-document.querySelector('.my-analytics').addEventListener('click', ()=>{
-    const id = document.querySelector('.id').value,
-          ghName = document.querySelector('.name').value,
-          output =document.querySelector('.output'),
-          chartContainer = document.querySelector('.chart-container');
+            output.innerHTML = '';
+            output.classList.add('output-fill');
+            chartContainer.innerHTML = '<canvas id="myChart"></canvas>';
+            new ScoreAnalytics(id, ghName).myAnalytics(true).catch(()=>{output.innerHTML = 'Зайди в app.rs.school'});
+        });
+        document.querySelector('.task-analitycs').addEventListener('click', ()=>{
+            const id = document.querySelector('.id').value,
+                ghName = document.querySelector('.name').value,
+                output =document.querySelector('.output'),
+                chartContainer = document.querySelector('.chart-container');
 
-    output.innerHTML = '';
-    output.classList.add('output-fill');
-    chartContainer.innerHTML = '<canvas id="myChart"></canvas>';
-    new ScoreAnalytics(id, ghName).myAnalytics(true).catch(()=>{output.innerHTML = 'Зайди в app.rs.school'});
-});
-document.querySelector('.task-analitycs').addEventListener('click', ()=>{
-    const id = document.querySelector('.id').value,
-          ghName = document.querySelector('.name').value,
-          output =document.querySelector('.output'),
-          chartContainer = document.querySelector('.chart-container');
+            output.innerHTML = 'LOADING...';
+            output.classList.add('output-fill');
+            chartContainer.innerHTML = '<canvas id="taskChart"></canvas>';
+            new ScoreAnalytics(id, ghName).getList().catch((reject)=>{reject ? 
+                output.innerHTML = reject : 
+                output.innerHTML = 'Зайди в app.rs.school'});
+        });
+        document.querySelector('.cross-check').addEventListener('change', ()=>{
+            const id = document.querySelector('.id').value,
+                ghName = document.querySelector('.name').value,
+                output =document.querySelector('.output'),
+                chartContainer = document.querySelector('.chart-container');
 
-    output.innerHTML = 'LOADING...';
-    output.classList.add('output-fill');
-    chartContainer.innerHTML = '<canvas id="taskChart"></canvas>';
-    new ScoreAnalytics(id, ghName).getList().catch((reject)=>{reject ? 
-        output.innerHTML = reject : 
-        output.innerHTML = 'Зайди в app.rs.school'});
-});
-document.querySelector('.cross-check').addEventListener('change', ()=>{
-    const id = document.querySelector('.id').value,
-          ghName = document.querySelector('.name').value,
-          output =document.querySelector('.output'),
-          chartContainer = document.querySelector('.chart-container');
+            output.innerHTML = 'LOADING...';
+            output.classList.add('output-fill');
+            chartContainer.innerHTML = '';
+            new ScoreAnalytics(id, ghName).getFeedback().catch(()=>{output.innerHTML = 'Зайди в app.rs.school или укажи СВОЙ гитхаб, хитрый'});
+        });
+        document.querySelector('.deadline').addEventListener('click', () => {
+            const id = document.querySelector('.id').value,
+                ghName = document.querySelector('.name').value,
+                output =document.querySelector('.output'),
+                chartContainer = document.querySelector('.chart-container');
 
-    output.innerHTML = 'LOADING...';
-    output.classList.add('output-fill');
-    chartContainer.innerHTML = '';
-    new ScoreAnalytics(id, ghName).getFeedback().catch(()=>{output.innerHTML = 'Зайди в app.rs.school или укажи СВОЙ гитхаб, хитрый'});
-});
-document.querySelector('.deadline').addEventListener('click', () => {
-    const id = document.querySelector('.id').value,
-          ghName = document.querySelector('.name').value,
-          output =document.querySelector('.output'),
-          chartContainer = document.querySelector('.chart-container');
+            output.innerHTML = 'LOADING...';
+            output.classList.add('output-fill');
+            chartContainer.innerHTML = '';
+            new ScoreAnalytics(id, ghName).getDeadlineList().then((result)=>{
+                for (let [elem,date] of Object.entries(result.timer)) {
+                    let interval = setInterval(()=>{document.querySelector(`.id${elem}`) ? 
+                    document.querySelector(`.id${elem}`).innerHTML = result.deadlineTimer(date) :
+                    clearInterval(interval);}, 1000);
+                }
+            });
+        });
+    }else {
+        window.alert('Нужно авторизоваться в app.rs.school, после чего снова открыть расширение', 'OK');
+        let link = document.createElement('a');
+        link.href = 'https://app.rs.school/';
+        link.target = '_blank';
+        link.click();
+    }
+}
+start();
 
-    output.innerHTML = 'LOADING...';
-    output.classList.add('output-fill');
-    chartContainer.innerHTML = '';
-    new ScoreAnalytics(id, ghName).getDeadlineList();
-});
+
 
