@@ -16,8 +16,8 @@
 
 # Установка
 Скачай расширение:
- - если хром [upd 1.3.3(23.04.21)](https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.3.3.zip)
- - если хромиум(но не хром) upd 23.04.21 скачиваете по ссылке выше, расширение лежит в папке без фразы "for Developers"
+ - [upd 1.3.4(26.06.23)](https://github.com/Snak3GMS/ScoreAnalyticsExt/archive/refs/tags/1.3.4.zip)
+
 
 Если google chrome: 
   1. Откройте вкладку расширений в [хроме](chrome://extensions/)
